@@ -3,11 +3,10 @@ google.com, pub-3548016532531500, DIRECT, f08c47fec0942fa0
 facebook.com, 341170028187164, DIRECT, c3e20eee3f780d68
 google.com, pub-7700884782874622, DIRECT, f08c47fec0942fa0
 
-#GAM
-google.com, pub-7700884782874622, DIRECT, f08c47fec0942fa0
-
 #GAM_Geniee
 google.com, pub-7700884782874622, DIRECT, f08c47fec0942fa0
+#GAM 2
+google.com, pub-3954692852404033, DIRECT, f08c47fec0942fa0
 
 #applovin
 applovin.com, eb867d8ba66138e31e25b87f7b81ee0c, DIRECT
