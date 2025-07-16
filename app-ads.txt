@@ -3236,3 +3236,4 @@ Contextweb.com, 562899,RESELLER,89ff185a4c4e857c
 hyperad.tech, 150, RESELLER
 hyperad.tech, 215, RESELLER
 google.com, pub-5533854580432370, RESELLER, f08c47fec0942fa0
+google.com, pub-2543141236149843, DIRECT, f08c47fec0942fa0
