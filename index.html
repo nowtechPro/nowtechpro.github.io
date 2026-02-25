@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Now Tech – AI-Powered Mobile Studio</title>
+  <meta name="description" content="Now Tech: A creative mobile app studio powered by AI – ChatGO, Lingua, Go Translate, PlantAI, Pixenia, PicGo."/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --accent: #a78bfa;
+      --dark: #0f172a;
+      --gray: #64748b;
+      --light: #f8fafc;
+      --gradient: linear-gradient(135deg, #6366f1 0%, #a78bfa 50%, #4f46e5 100%);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter', system-ui, sans-serif; background:var(--light); color:var(--dark); line-height:1.6; font-size:17px; overflow-x:hidden; }
+
+    .container { max-width:1280px; margin:0 auto; padding:0 20px; }
+
+    header {
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      background:rgba(15,23,42,0.85); backdrop-filter:blur(12px);
+      transition:all 0.4s;
+    }
+    header.scrolled { background:rgba(15,23,42,0.95); box-shadow:0 4px 20px rgba(0,0,0,0.2); }
+
+    nav { display:flex; justify-content:space-between; align-items:center; height:80px; }
+    .logo { font-family:'Poppins',sans-serif; font-size:2rem; font-weight:800; color:white; text-decoration:none; background:linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+    .checkbtn { font-size:32px; color:white; cursor:pointer; display:block; }
+    #check { display:none; }
+    .nav-links {
+      position:fixed; inset:80px 0 0 0; background:var(--dark); flex-direction:column; justify-content:center; gap:60px;
+      transform:translateX(100%); transition:transform 0.5s cubic-bezier(0.68,-0.55,0.265,1.55); list-style:none; text-align:center;
+    }
+    .nav-links a { color:white; text-decoration:none; font-size:1.5rem; font-weight:600; transition:color 0.3s; }
+    .nav-links a:hover { color:var(--accent); }
+    #check:checked ~ .nav-links { transform:translateX(0); }
+
+    .btn { background:var(--gradient); color:white; padding:14px 32px; border-radius:60px; text-decoration:none; font-weight:700; font-size:1.1rem; transition:all 0.4s; box-shadow:0 8px 30px rgba(99,102,241,0.3); }
+    .btn:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(99,102,241,0.4); }
+
+    #hero {
+      min-height:100vh; padding:180px 0 100px; text-align:center; color:white;
+      background: url('https://thumbs.dreamstime.com/b/abstract-neon-light-waves-background-blue-purple-glow-modern-featuring-flowing-colors-dark-surface-440024846.jpg') center/cover no-repeat fixed;
+      position:relative;
+    }
+    #hero::before { content:''; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(15,23,42,0.6), rgba(15,23,42,0.8)); }
+    #hero .container { position:relative; z-index:2; }
+    #hero h1 { font-family:'Poppins',sans-serif; font-size:clamp(3rem,10vw,5.5rem); font-weight:800; margin-bottom:1.5rem; background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    #hero p { font-size:clamp(1.2rem,4vw,1.5rem); max-width:800px; margin:0 auto 2.5rem; opacity:0.95; }
+
+    section { padding:120px 0; }
+    h2 { font-family:'Poppins',sans-serif; font-size:clamp(2.5rem,6vw,4rem); text-align:center; margin-bottom:4rem; background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+    .apps-grid { display:grid; grid-template-columns:1fr; gap:40px; }
+    .app-card {
+      background:white; border-radius:24px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.12); transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+      text-decoration:none; color:inherit; opacity:0; transform:translateY(50px);
+    }
+    .app-card.visible { opacity:1; transform:translateY(0); }
+    .app-card:hover { transform:translateY(-20px) scale(1.04); box-shadow:0 40px 80px rgba(99,102,241,0.3); }
+    .app-card img { width:100%; height:320px; object-fit:cover; background:#f1f5f9; }
+    .app-info { padding:32px; text-align:center; }
+    .app-info h3 { font-size:1.7rem; margin-bottom:1rem; font-weight:700; }
+    .app-info p { color:var(--gray); font-size:1.15rem; }
+
+    #about { background:var(--dark); color:white; text-align:center; }
+    #about p { max-width:800px; margin:0 auto 2rem; font-size:1.3rem; opacity:0.9; }
+
+    #contact .contact-links { display:flex; flex-direction:column; gap:24px; align-items:center; }
+    .contact-links a { font-size:1.4rem; color:var(--accent); text-decoration:none; }
+
+    footer { background:var(--dark); color:#94a3b8; text-align:center; padding:80px 0 40px; font-size:1.1rem; }
+
+    @media (min-width:640px) { .apps-grid { grid-template-columns:repeat(2,1fr); } .contact-links { flex-direction:row; justify-content:center; gap:48px; } }
+    @media (min-width:1024px) {
+      .checkbtn { display:none; }
+      .nav-links { position:static; flex-direction:row; transform:none; background:none; gap:48px; }
+      .nav-links a { font-size:1.2rem; }
+      .apps-grid { grid-template-columns:repeat(3,1fr); }
+      #hero { padding:220px 0 140px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="header">
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">Now Tech</a>
+        <label for="check" class="checkbtn">☰</label>
+        <input type="checkbox" id="check">
+        <ul class="nav-links">
+          <li><a href="#apps">Apps</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="https://play.google.com/store/apps/developer?id=Now+Tech" target="_blank" class="btn">Google Play</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section id="hero">
+    <div class="container">
+      <h1>AI-Powered Mobile Experiences</h1>
+      <p>Now Tech – A passionate mobile app studio blending cutting-edge AI to deliver smart, useful tools loved by millions worldwide.</p>
+      <a href="https://play.google.com/store/apps/developer?id=Now+Tech" target="_blank" class="btn">Explore Our Apps</a>
+    </div>
+  </section>
+
+  <section id="apps" class="container">
+    <h2>Featured Apps</h2>
+    <div class="apps-grid">
+
+      <a href="https://play.google.com/store/apps/details?id=com.nowtech.chatgo" class="app-card" target="_blank">
+        <img src="https://play-lh.googleusercontent.com/pyPx4fx7YpKEh5ShLVlIQF1mlZAeD-I62PMer8YpDG1pmyKrc5CWC_QNZ63_GwPvf60=w480-h960-rw" alt="ChatGO: AI Chat 5.0" loading="lazy">
+        <div class="app-info">
+          <h3>ChatGO: AI Chat 5.0</h3>
+          <p>Intelligent AI chatbot that converses naturally, just like a real person.</p>
+        </div>
+      </a>
+
+      <a href="https://play.google.com/store/apps/details?id=com.learn.speak.language.english.aitutor.spainish.lingua" class="app-card" target="_blank">
+        <img src="https://play-lh.googleusercontent.com/AX_zrObYTbb9UpR3hGJUva6t9vTrPJQzrpCFLOnLvKvs4B_uxAqTMcIrTAF9LfX-5scq=s96-rw" alt="Lingua: Speak & Learn English" loading="lazy">
+        <div class="app-info">
+          <h3>Lingua: Speak & Learn English</h3>
+          <p>Master English speaking and learning with personalized AI guidance.</p>
+        </div>
+      </a>
+
+      <a href="https://play.google.com/store/apps/details?id=com.nowtech.gotranslate" class="app-card" target="_blank">
+        <img src="https://play-lh.googleusercontent.com/nifc-Yf8tdw-n61DoR1_xMg1JQOf52ZHHABGNmgUkvwK2WWoaXLo1BLUQQKRuFelPtsAE3cFUnQAz7kYhcYI=w480-h960-rw" alt="Go Translate - AI Translator" loading="lazy">
+        <div class="app-info">
+          <h3>Go Translate - AI Translator</h3>
+          <p>Instant, accurate language translation powered by advanced AI.</p>
+        </div>
+      </a>
+
+      <a href="https://play.google.com/store/apps/details?id=com.herby.plant.identify.trees.flowers.picture.ai.care" class="app-card" target="_blank">
+        <img src="https://play-lh.googleusercontent.com/xi7UZ_3Koue4FIDLwZcboTepirdpTeBPo4mkqvGISeq0W9at6tkjumI19ReAbs4T0g=w480-h960-rw" alt="PlantAI: Plant Identifier App" loading="lazy">
+        <div class="app-info">
+          <h3>PlantAI: Plant Identifier App</h3>
+          <p>Identify plants, trees, and flowers instantly from a single photo.</p>
+        </div>
+      </a>
+
+      <a href="https://play.google.com/store/apps/details?id=com.ai.photo.editor.enhance.art" class="app-card" target="_blank">
+        <img src="https://play-lh.googleusercontent.com/VzndujgRw7Lsr3mGl_9PdKTj1rsgsYwCbdrwV6iex0dxYz1jCaeLwshd171gDqwVNeDZAz9T8pMistDQW24l4g=w480-h960-rw" alt="Pixenia: Ai Photo Editor & Art" loading="lazy">
+        <div class="app-info">
+          <h3>Pixenia: Ai Photo Editor & Art</h3>
+          <p>Professional photo editing and AI-generated artwork, avatars, background removal, and more.</p>
+        </div>
+      </a>
+
+      <a href="https://play.google.com/store/apps/details?id=com.aiart.aigenerator.aifilter.aieditor" class="app-card" target="_blank">
+        <img src="https://play-lh.googleusercontent.com/DpaTdEzF6Js67IajFAdeSmEjMU0mFwGBbgnolHOeQ2J6fxUYryGRRY36hwWPBKYneg=w480-h960-rw" alt="PicGo: AI Image Generator" loading="lazy">
+        <div class="app-info">
+          <h3>PicGo: AI Image Generator</h3>
+          <p>Create stunning images, videos, avatars, and logos in seconds with powerful AI.</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2>About Now Tech</h2>
+      <p>We are a passionate studio dedicated to mobile apps and cutting-edge AI. Every app is thoughtfully designed to solve real problems, delivering smooth experiences and real value to users around the world.</p>
+      <p>Over 10 high-quality apps with millions of downloads on Google Play.</p>
+    </div>
+  </section>
+
+  <section id="contact" class="container">
+    <h2>Get in Touch</h2>
+    <p>Have an idea for collaboration, feedback, or want to build an app with Now Tech? Reach out today!</p>
+    <div class="contact-links">
+      <a href="mailto:support@nowtech.studio">📧 support@nowtech.studio</a>
+      <a href="https://play.google.com/store/apps/developer?id=Now+Tech" target="_blank">→ Google Play Developer Page</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Now Tech Studio. All rights reserved.<br>Powered by creativity & AI innovation.</p>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 100);
+    });
+
+    const cards = document.querySelectorAll('.app-card');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+    cards.forEach(card => observer.observe(card));
+  </script>
+</body>
+</html>
