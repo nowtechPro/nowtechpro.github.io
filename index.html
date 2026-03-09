@@ -2,212 +2,1037 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Now Tech – AI-Powered Mobile Studio</title>
-  <meta name="description" content="Now Tech: A creative mobile app studio powered by AI – ChatGO, Lingua, Go Translate, PlantAI, Pixenia, PicGo."/>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Now Tech — Mobile & AI Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --accent: #a78bfa;
-      --dark: #0f172a;
-      --gray: #64748b;
-      --light: #f8fafc;
-      --gradient: linear-gradient(135deg, #6366f1 0%, #a78bfa 50%, #4f46e5 100%);
+      --black: #080910;
+      --deep: #0d0f18;
+      --card: #111320;
+      --border: rgba(255,255,255,0.07);
+      --white: #f0f2ff;
+      --muted: rgba(240,242,255,0.45);
+      --accent: #5b6af7;
+      --accent2: #a78bfa;
+      --accent3: #38e2c3;
+      --glow: rgba(91,106,247,0.18);
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Inter', system-ui, sans-serif; background:var(--light); color:var(--dark); line-height:1.6; font-size:17px; overflow-x:hidden; }
+    html { scroll-behavior: smooth; }
 
-    .container { max-width:1280px; margin:0 auto; padding:0 20px; }
-
-    header {
-      position:fixed; top:0; left:0; right:0; z-index:1000;
-      background:rgba(15,23,42,0.85); backdrop-filter:blur(12px);
-      transition:all 0.4s;
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
     }
-    header.scrolled { background:rgba(15,23,42,0.95); box-shadow:0 4px 20px rgba(0,0,0,0.2); }
 
-    nav { display:flex; justify-content:space-between; align-items:center; height:80px; }
-    .logo { font-family:'Poppins',sans-serif; font-size:2rem; font-weight:800; color:white; text-decoration:none; background:linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-
-    .checkbtn { font-size:32px; color:white; cursor:pointer; display:block; }
-    #check { display:none; }
-    .nav-links {
-      position:fixed; inset:80px 0 0 0; background:var(--dark); flex-direction:column; justify-content:center; gap:60px;
-      transform:translateX(100%); transition:transform 0.5s cubic-bezier(0.68,-0.55,0.265,1.55); list-style:none; text-align:center;
+    /* Custom cursor */
+    #cursor {
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, opacity 0.15s;
+      mix-blend-mode: screen;
     }
-    .nav-links a { color:white; text-decoration:none; font-size:1.5rem; font-weight:600; transition:color 0.3s; }
-    .nav-links a:hover { color:var(--accent); }
-    #check:checked ~ .nav-links { transform:translateX(0); }
+    #cursor-ring {
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(91,106,247,0.5);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.35s cubic-bezier(.22,.87,.25,1), width 0.2s, height 0.2s, border-color 0.2s;
+    }
 
-    .btn { background:var(--gradient); color:white; padding:14px 32px; border-radius:60px; text-decoration:none; font-weight:700; font-size:1.1rem; transition:all 0.4s; box-shadow:0 8px 30px rgba(99,102,241,0.3); }
-    .btn:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(99,102,241,0.4); }
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+    }
 
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 60px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(8,9,16,0.7);
+      border-bottom: 1px solid var(--border);
+      transition: padding 0.3s;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.5px;
+      color: var(--white);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.82rem;
+      padding: 10px 22px;
+      border-radius: 100px;
+      letter-spacing: 0.3px;
+      transition: opacity 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 20px rgba(91,106,247,0.3);
+    }
+    .nav-cta:hover { opacity: 0.85; box-shadow: 0 0 30px rgba(91,106,247,0.5); }
+
+    /* ── HERO ── */
     #hero {
-      min-height:100vh; padding:180px 0 100px; text-align:center; color:white;
-      background: url('https://thumbs.dreamstime.com/b/abstract-neon-light-waves-background-blue-purple-glow-modern-featuring-flowing-colors-dark-surface-440024846.jpg') center/cover no-repeat fixed;
-      position:relative;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 120px 40px 80px;
+      position: relative;
+      overflow: hidden;
     }
-    #hero::before { content:''; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(15,23,42,0.6), rgba(15,23,42,0.8)); }
-    #hero .container { position:relative; z-index:2; }
-    #hero h1 { font-family:'Poppins',sans-serif; font-size:clamp(3rem,10vw,5.5rem); font-weight:800; margin-bottom:1.5rem; background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    #hero p { font-size:clamp(1.2rem,4vw,1.5rem); max-width:800px; margin:0 auto 2.5rem; opacity:0.95; }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 10%, rgba(91,106,247,0.12) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(167,139,250,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 10% 70%, rgba(56,226,195,0.05) 0%, transparent 60%);
+    }
+    /* Grid lines */
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 70%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(91,106,247,0.1);
+      border: 1px solid rgba(91,106,247,0.25);
+      border-radius: 100px;
+      padding: 7px 18px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--accent2);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent3); display: inline-block; animation: pulse 1.8s infinite; }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -3px;
+      max-width: 820px;
+      animation: fadeUp 0.9s 0.1s ease both;
+    }
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--accent3) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      font-weight: 300;
+      max-width: 540px;
+      margin: 24px auto 44px;
+      line-height: 1.7;
+      animation: fadeUp 1s 0.2s ease both;
+    }
+    .hero-btns {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 14px 32px;
+      border-radius: 100px;
+      box-shadow: 0 0 30px rgba(91,106,247,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(91,106,247,0.5); }
+    .btn-ghost {
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 14px 32px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.15); }
 
-    section { padding:120px 0; }
-    h2 { font-family:'Poppins',sans-serif; font-size:clamp(2.5rem,6vw,4rem); text-align:center; margin-bottom:4rem; background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    /* Stats bar */
+    .hero-stats {
+      display: flex; gap: 60px; margin-top: 80px;
+      animation: fadeUp 1s 0.5s ease both;
+      position: relative;
+    }
+    .hero-stats::before {
+      content: '';
+      position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+      width: 1px; height: 30px;
+      background: linear-gradient(var(--accent), transparent);
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--white) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-label { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.5px; margin-top: 2px; }
 
-    .apps-grid { display:grid; grid-template-columns:1fr; gap:40px; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 110px 60px; max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .section-desc { color: var(--muted); max-width: 480px; font-size: 1.02rem; line-height: 1.75; }
+
+    /* ── APPS GRID ── */
+    #apps { border-top: 1px solid var(--border); }
+    .apps-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; flex-wrap: wrap; gap: 24px; }
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
     .app-card {
-      background:white; border-radius:24px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.12); transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);
-      text-decoration:none; color:inherit; opacity:0; transform:translateY(50px);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      display: flex; flex-direction: column; gap: 18px;
+      transition: transform 0.25s ease, border-color 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
     }
-    .app-card.visible { opacity:1; transform:translateY(0); }
-    .app-card:hover { transform:translateY(-20px) scale(1.04); box-shadow:0 40px 80px rgba(99,102,241,0.3); }
-    .app-card img { width:100%; height:320px; object-fit:cover; background:#f1f5f9; }
-    .app-info { padding:32px; text-align:center; }
-    .app-info h3 { font-size:1.7rem; margin-bottom:1rem; font-weight:700; }
-    .app-info p { color:var(--gray); font-size:1.15rem; }
-
-    #about { background:var(--dark); color:white; text-align:center; }
-    #about p { max-width:800px; margin:0 auto 2rem; font-size:1.3rem; opacity:0.9; }
-
-    #contact .contact-links { display:flex; flex-direction:column; gap:24px; align-items:center; }
-    .contact-links a { font-size:1.4rem; color:var(--accent); text-decoration:none; }
-
-    footer { background:var(--dark); color:#94a3b8; text-align:center; padding:80px 0 40px; font-size:1.1rem; }
-
-    @media (min-width:640px) { .apps-grid { grid-template-columns:repeat(2,1fr); } .contact-links { flex-direction:row; justify-content:center; gap:48px; } }
-    @media (min-width:1024px) {
-      .checkbtn { display:none; }
-      .nav-links { position:static; flex-direction:row; transform:none; background:none; gap:48px; }
-      .nav-links a { font-size:1.2rem; }
-      .apps-grid { grid-template-columns:repeat(3,1fr); }
-      #hero { padding:220px 0 140px; }
+    .app-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
+    .app-card:hover { transform: translateY(-6px); border-color: rgba(91,106,247,0.25); box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(91,106,247,0.07); }
+    .app-card:hover::before { opacity: 1; }
+    .app-card-top { display: flex; align-items: center; gap: 16px; }
+    .app-icon {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      overflow: hidden; flex-shrink: 0;
+      background: var(--deep);
+    }
+    .app-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .app-icon-placeholder {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .app-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+    .app-cat {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .app-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.65; flex: 1; }
+    .app-footer { display: flex; align-items: center; justify-content: space-between; }
+    .app-rating {
+      display: flex; align-items: center; gap: 5px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+    .star { color: #fbbf24; font-size: 0.8rem; }
+    .app-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent2);
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: gap 0.2s;
+    }
+    .app-link:hover { gap: 10px; }
+    .app-tag {
+      display: inline-block;
+      background: rgba(91,106,247,0.1);
+      color: var(--accent2);
+      border: 1px solid rgba(91,106,247,0.2);
+      border-radius: 100px;
+      padding: 3px 10px;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .about-visual {
+      position: relative;
+      aspect-ratio: 1;
+      max-width: 440px;
+    }
+    .about-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(91,106,247,0.15);
+      animation: spin linear infinite;
+    }
+    .about-ring:nth-child(1) { inset: 0; animation-duration: 20s; }
+    .about-ring:nth-child(2) { inset: 15%; animation-duration: 14s; animation-direction: reverse; border-color: rgba(167,139,250,0.15); }
+    .about-ring:nth-child(3) { inset: 30%; animation-duration: 9s; border-color: rgba(56,226,195,0.15); }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .about-ring-dot {
+      position: absolute; width: 6px; height: 6px; border-radius: 50%;
+      top: -3px; left: 50%; transform: translateX(-50%);
+    }
+    .about-ring:nth-child(1) .about-ring-dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+    .about-ring:nth-child(2) .about-ring-dot { background: var(--accent2); box-shadow: 0 0 8px var(--accent2); }
+    .about-ring:nth-child(3) .about-ring-dot { background: var(--accent3); box-shadow: 0 0 8px var(--accent3); }
+    .about-center {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+    }
+    .about-logo-text {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.8rem;
+      letter-spacing: -1px;
+    }
+    .about-logo-text span { color: var(--accent); }
+    .about-tagline { font-size: 0.75rem; color: var(--muted); letter-spacing: 1.5px; margin-top: 6px; }
+
+    .about-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+    .pill {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 8px 18px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      transition: background 0.2s, color 0.2s;
+    }
+    .pill:hover { background: rgba(91,106,247,0.1); color: var(--white); }
+
+    /* ── VALUES ── */
+    #values { border-top: 1px solid var(--border); }
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+    .value-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .value-card:hover { border-color: rgba(91,106,247,0.25); transform: translateY(-4px); }
+    .value-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+    }
+    .value-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .value-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
+
+    /* ── CONTACT ── */
+    #contact {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .contact-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 64px;
+      max-width: 640px;
+      width: 100%;
+      margin-top: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-box::before {
+      content: '';
+      position: absolute; inset: -1px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(91,106,247,0.25), transparent 40%, rgba(56,226,195,0.1));
+      z-index: -1;
+    }
+    .contact-box p { color: var(--muted); margin-bottom: 32px; line-height: 1.7; }
+    .contact-email {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      transition: color 0.2s;
+      display: block;
+      margin-bottom: 32px;
+    }
+    .contact-email:hover { color: var(--accent2); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--white);
+    }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 600;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 100%; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── MOBILE DRAWER ── */
+    .mobile-drawer {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 450;
+      background: rgba(8,9,16,0.98);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .mobile-drawer.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .mobile-drawer a {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: -1px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.3s ease, transform 0.3s ease, color 0.2s;
+    }
+    .mobile-drawer.open a { opacity: 1; transform: translateY(0); }
+    .mobile-drawer.open a:nth-child(1) { transition-delay: 0.05s; }
+    .mobile-drawer.open a:nth-child(2) { transition-delay: 0.1s; }
+    .mobile-drawer.open a:nth-child(3) { transition-delay: 0.15s; }
+    .mobile-drawer.open a:nth-child(4) { transition-delay: 0.2s; }
+    .mobile-drawer.open a:nth-child(5) { transition-delay: 0.25s; }
+    .mobile-drawer a:hover { color: var(--accent2); }
+    .mobile-drawer-cta {
+      margin-top: 24px;
+      background: var(--accent) !important;
+      color: var(--white) !important;
+      padding: 14px 36px !important;
+      border-radius: 100px;
+      font-size: 1rem !important;
+      box-shadow: 0 0 30px rgba(91,106,247,0.4);
+    }
+
+    /* ── RESPONSIVE: TABLET ── */
+    @media (max-width: 1024px) {
+      nav { padding: 20px 32px; }
+      section { padding: 90px 40px; }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      #about { gap: 48px; }
+    }
+
+    /* ── RESPONSIVE: MOBILE ── */
+    @media (max-width: 768px) {
+      /* Disable custom cursor on touch */
+      body { cursor: auto; }
+      #cursor, #cursor-ring { display: none; }
+
+      /* Nav */
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-drawer { display: flex; }
+
+      /* Hero */
+      #hero {
+        padding: 100px 24px 64px;
+        align-items: center;
+        text-align: center;
+      }
+      h1 {
+        font-size: clamp(2.4rem, 11vw, 3.6rem);
+        letter-spacing: -2px;
+        text-align: center;
+      }
+      .hero-sub {
+        font-size: 0.98rem;
+        margin: 20px auto 36px;
+        text-align: center;
+      }
+      .hero-btns {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .btn-primary, .btn-ghost {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+        padding: 14px 24px;
+      }
+      .hero-stats {
+        gap: 24px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 56px;
+      }
+      .stat-num { font-size: 1.6rem; }
+
+      /* Sections */
+      section { padding: 72px 20px; }
+
+      /* Apps */
+      .apps-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .apps-grid { grid-template-columns: 1fr; gap: 16px; }
+      .app-card { padding: 22px; }
+
+      /* About */
+      #about { grid-template-columns: 1fr; gap: 0; }
+      .about-visual { display: none; }
+
+      /* Values */
+      .values-grid { grid-template-columns: 1fr; gap: 16px; }
+      .value-card { padding: 28px 22px; }
+
+      /* Contact */
+      #contact { padding: 72px 20px; }
+      .contact-box { padding: 36px 24px; margin-top: 32px; }
+      .contact-email { font-size: 1.1rem; word-break: break-all; }
+      .contact-box > div { flex-direction: column; align-items: center; }
+      .contact-box > div a { width: 100%; max-width: 280px; text-align: center; }
+
+      /* Footer */
+      footer {
+        padding: 28px 20px;
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+      .footer-links { gap: 20px; flex-wrap: wrap; justify-content: center; }
+
+      /* Section labels centered on mobile */
+      h2 { font-size: clamp(1.8rem, 8vw, 2.5rem); letter-spacing: -1px; }
+    }
+
+    /* ── RESPONSIVE: SMALL PHONES ── */
+    @media (max-width: 400px) {
+      #hero { padding: 90px 16px 56px; }
+      section { padding: 60px 16px; }
+      h1 { font-size: 2.2rem; letter-spacing: -1.5px; }
+      .hero-badge { font-size: 0.7rem; padding: 6px 14px; }
+      .hero-stats { gap: 16px; }
+      .stat-num { font-size: 1.4rem; }
+    }
+
   </style>
 </head>
 <body>
 
-  <header id="header">
-    <div class="container">
-      <nav>
-        <a href="#" class="logo">Now Tech</a>
-        <label for="check" class="checkbtn">☰</label>
-        <input type="checkbox" id="check">
-        <ul class="nav-links">
-          <li><a href="#apps">Apps</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="https://play.google.com/store/apps/developer?id=Now+Tech" target="_blank" class="btn">Google Play</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
 
-  <section id="hero">
-    <div class="container">
-      <h1>AI-Powered Mobile Experiences</h1>
-      <p>Now Tech – A passionate mobile app studio blending cutting-edge AI to deliver smart, useful tools loved by millions worldwide.</p>
-      <a href="https://play.google.com/store/apps/developer?id=Now+Tech" target="_blank" class="btn">Explore Our Apps</a>
-    </div>
-  </section>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <span class="dot"></span>
+      Now Tech
+    </a>
+    <ul class="nav-links">
+      <li><a href="#apps">Products</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#values">Values</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="https://play.google.com/store/apps/developer?id=Now+Tech" target="_blank" class="nav-cta">Google Play ↗</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 
-  <section id="apps" class="container">
-    <h2>Featured Apps</h2>
+  <!-- MOBILE DRAWER -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <a href="#apps" class="drawer-link">Products</a>
+    <a href="#about" class="drawer-link">About Us</a>
+    <a href="#values" class="drawer-link">Values</a>
+    <a href="#contact" class="drawer-link">Contact</a>
+    <a href="https://play.google.com/store/apps/developer?id=Now+Tech" target="_blank" class="mobile-drawer-cta">Google Play ↗</a>
+  </div>
+
+  <!-- HERO -->
+  <div id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-badge"><span></span> Mobile & AI Studio</div>
+    <h1>Smart <em>Technology</em><br/>In Your Hands</h1>
+    <p class="hero-sub">Now Tech builds world-class mobile applications powered by artificial intelligence — delivering exceptional user experiences across the globe.</p>
+    <div class="hero-btns">
+      <a href="#apps" class="btn-primary">Explore Products</a>
+      <a href="#contact" class="btn-ghost">Partner With Us</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">13+</div>
+        <div class="stat-label">Apps Launched</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4.2★</div>
+        <div class="stat-label">Avg. Rating</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1M+</div>
+        <div class="stat-label">Users Worldwide</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPS -->
+  <section id="apps">
+    <div class="apps-header reveal">
+      <div>
+        <div class="section-label">Product Portfolio</div>
+        <h2>Featured<br/>Applications</h2>
+      </div>
+      <p class="section-desc">From AI chatbots and language learning to plant identification — every product is a creative solution built for real impact.</p>
+    </div>
+
     <div class="apps-grid">
 
-      <a href="https://play.google.com/store/apps/details?id=com.nowtech.chatgo" class="app-card" target="_blank">
-        <img src="https://play-lh.googleusercontent.com/pyPx4fx7YpKEh5ShLVlIQF1mlZAeD-I62PMer8YpDG1pmyKrc5CWC_QNZ63_GwPvf60=w480-h960-rw" alt="ChatGO: AI Chat 5.0" loading="lazy">
-        <div class="app-info">
-          <h3>ChatGO: AI Chat 5.0</h3>
-          <p>Intelligent AI chatbot that converses naturally, just like a real person.</p>
+      <div class="app-card reveal reveal-delay-1">
+        <div class="app-card-top">
+          <div class="app-icon-placeholder" style="background: linear-gradient(135deg,#1a1a3e,#2d2b7e);"><img src="https://play-lh.googleusercontent.com/pyPx4fx7YpKEh5ShLVlIQF1mlZAeD-I62PMer8YpDG1pmyKrc5CWC_QNZ63_GwPvf60=w480-h960-rw" alt="ChatGO" style="width:100%;height:100%;border-radius:14px;object-fit:cover;"></div>
+          <div>
+            <div class="app-name">ChatGO: AI Chatbot</div>
+            <div class="app-cat">Productivity · AI Assistant</div>
+          </div>
         </div>
-      </a>
+        <p class="app-desc">A smart AI assistant powered by GPT — answers questions, generates content, and supports your daily workflow with speed and precision.</p>
+        <div class="app-footer">
+          <div class="app-rating"><span class="star">★</span> 4.0 <span style="color:var(--muted); font-weight:300; font-size:0.8rem;">/ 5</span></div>
+          <a href="https://play.google.com/store/apps/details?id=com.chatgpt.aichat.gpt3.aichatbot" target="_blank" class="app-link"><span class="app-tag">AI</span> Download →</a>
+        </div>
+      </div>
 
-      <a href="https://play.google.com/store/apps/details?id=com.learn.speak.language.english.aitutor.spainish.lingua" class="app-card" target="_blank">
-        <img src="https://play-lh.googleusercontent.com/AX_zrObYTbb9UpR3hGJUva6t9vTrPJQzrpCFLOnLvKvs4B_uxAqTMcIrTAF9LfX-5scq=s96-rw" alt="Lingua: Speak & Learn English" loading="lazy">
-        <div class="app-info">
-          <h3>Lingua: Speak & Learn English</h3>
-          <p>Master English speaking and learning with personalized AI guidance.</p>
+      <div class="app-card reveal reveal-delay-2">
+        <div class="app-card-top">
+          <div class="app-icon-placeholder" style="background: linear-gradient(135deg,#0f2e1c,#1a6b3c);"><img src="https://play-lh.googleusercontent.com/AX_zrObYTbb9UpR3hGJUva6t9vTrPJQzrpCFLOnLvKvs4B_uxAqTMcIrTAF9LfX-5scq=s96-rw" alt="Lingua" style="width:100%;height:100%;border-radius:14px;object-fit:cover;"></div>
+          <div>
+            <div class="app-name">Lingua: Learn English</div>
+            <div class="app-cat">Education · Language Learning</div>
+          </div>
         </div>
-      </a>
+        <p class="app-desc">Learn to speak English with a personalized AI tutor. Practice pronunciation, expand vocabulary, and build confidence in real conversations every day.</p>
+        <div class="app-footer">
+          <div class="app-rating"><span class="star">★</span> 4.4 <span style="color:var(--muted); font-weight:300; font-size:0.8rem;">/ 5</span></div>
+          <a href="https://play.google.com/store/apps/details?id=com.learn.speak.language.english.aitutor.spainish.lingua" target="_blank" class="app-link"><span class="app-tag">EDU</span> Download →</a>
+        </div>
+      </div>
 
-      <a href="https://play.google.com/store/apps/details?id=com.nowtech.gotranslate" class="app-card" target="_blank">
-        <img src="https://play-lh.googleusercontent.com/nifc-Yf8tdw-n61DoR1_xMg1JQOf52ZHHABGNmgUkvwK2WWoaXLo1BLUQQKRuFelPtsAE3cFUnQAz7kYhcYI=w480-h960-rw" alt="Go Translate - AI Translator" loading="lazy">
-        <div class="app-info">
-          <h3>Go Translate - AI Translator</h3>
-          <p>Instant, accurate language translation powered by advanced AI.</p>
+      <div class="app-card reveal reveal-delay-3">
+        <div class="app-card-top">
+          <div class="app-icon-placeholder" style="background: linear-gradient(135deg,#1a2e0f,#3a6b1a);"><img src="https://play-lh.googleusercontent.com/xi7UZ_3Koue4FIDLwZcboTepirdpTeBPo4mkqvGISeq0W9at6tkjumI19ReAbs4T0g=w480-h960-rw" alt="PlantAI" style="width:100%;height:100%;border-radius:14px;object-fit:cover;"></div>
+          <div>
+            <div class="app-name">PlantAI: Plant Identifier</div>
+            <div class="app-cat">Lifestyle · AI Scanner</div>
+          </div>
         </div>
-      </a>
+        <p class="app-desc">Instantly identify over 10,000 plant species from a single photo. Get detailed care guides, botanical info, and everything you need to know about plants around you.</p>
+        <div class="app-footer">
+          <div class="app-rating"><span class="star">★</span> 3.6 <span style="color:var(--muted); font-weight:300; font-size:0.8rem;">/ 5</span></div>
+          <a href="https://play.google.com/store/apps/details?id=com.herby.plant.identify.trees.flowers.picture.ai.care" target="_blank" class="app-link"><span class="app-tag">AI</span> Download →</a>
+        </div>
+      </div>
 
-      <a href="https://play.google.com/store/apps/details?id=com.herby.plant.identify.trees.flowers.picture.ai.care" class="app-card" target="_blank">
-        <img src="https://play-lh.googleusercontent.com/xi7UZ_3Koue4FIDLwZcboTepirdpTeBPo4mkqvGISeq0W9at6tkjumI19ReAbs4T0g=w480-h960-rw" alt="PlantAI: Plant Identifier App" loading="lazy">
-        <div class="app-info">
-          <h3>PlantAI: Plant Identifier App</h3>
-          <p>Identify plants, trees, and flowers instantly from a single photo.</p>
+      <div class="app-card reveal reveal-delay-1">
+        <div class="app-card-top">
+          <div class="app-icon-placeholder" style="background: linear-gradient(135deg,#1a1a2e,#3b3b8e);"><img src="https://play-lh.googleusercontent.com/nifc-Yf8tdw-n61DoR1_xMg1JQOf52ZHHABGNmgUkvwK2WWoaXLo1BLUQQKRuFelPtsAE3cFUnQAz7kYhcYI=w480-h960-rw" alt="Go Translate" style="width:100%;height:100%;border-radius:14px;object-fit:cover;"></div>
+          <div>
+            <div class="app-name">Go Translate: AI Translator</div>
+            <div class="app-cat">Tools · Translation</div>
+          </div>
         </div>
-      </a>
+        <p class="app-desc">Smart translation across 100+ languages powered by AI. Translate voice, images, and documents — communicate effortlessly across any language barrier.</p>
+        <div class="app-footer">
+          <div class="app-rating"><span class="star">★</span> 4.3 <span style="color:var(--muted); font-weight:300; font-size:0.8rem;">/ 5</span></div>
+          <a href="https://play.google.com/store/apps/details?id=com.translater.language.translator.smarttranslation" target="_blank" class="app-link"><span class="app-tag">AI</span> Download →</a>
+        </div>
+      </div>
 
-      <a href="https://play.google.com/store/apps/details?id=com.ai.photo.editor.enhance.art" class="app-card" target="_blank">
-        <img src="https://play-lh.googleusercontent.com/VzndujgRw7Lsr3mGl_9PdKTj1rsgsYwCbdrwV6iex0dxYz1jCaeLwshd171gDqwVNeDZAz9T8pMistDQW24l4g=w480-h960-rw" alt="Pixenia: Ai Photo Editor & Art" loading="lazy">
-        <div class="app-info">
-          <h3>Pixenia: Ai Photo Editor & Art</h3>
-          <p>Professional photo editing and AI-generated artwork, avatars, background removal, and more.</p>
+      <div class="app-card reveal reveal-delay-2">
+        <div class="app-card-top">
+          <div class="app-icon-placeholder" style="background: linear-gradient(135deg,#2e1a2e,#7e2d8e);"><img src="https://play-lh.googleusercontent.com/VzndujgRw7Lsr3mGl_9PdKTj1rsgsYwCbdrwV6iex0dxYz1jCaeLwshd171gDqwVNeDZAz9T8pMistDQW24l4g=w480-h960-rw" alt="Pixenia" style="width:100%;height:100%;border-radius:14px;object-fit:cover;"></div>
+          <div>
+            <div class="app-name">Pixenia: AI Photo Editor</div>
+            <div class="app-cat">Photo & Video · Creative</div>
+          </div>
         </div>
-      </a>
+        <p class="app-desc">Transform ordinary photos into stunning works of art with AI. Hundreds of artistic filters, automatic enhancement, and smart editing tools at your fingertips.</p>
+        <div class="app-footer">
+          <div class="app-rating"><span class="star">★</span> 4.1 <span style="color:var(--muted); font-weight:300; font-size:0.8rem;">/ 5</span></div>
+          <a href="https://play.google.com/store/apps/details?id=com.ai.photo.editor.enhance.art" target="_blank" class="app-link"><span class="app-tag">ART</span> Download →</a>
+        </div>
+      </div>
 
-      <a href="https://play.google.com/store/apps/details?id=com.aiart.aigenerator.aifilter.aieditor" class="app-card" target="_blank">
-        <img src="https://play-lh.googleusercontent.com/DpaTdEzF6Js67IajFAdeSmEjMU0mFwGBbgnolHOeQ2J6fxUYryGRRY36hwWPBKYneg=w480-h960-rw" alt="PicGo: AI Image Generator" loading="lazy">
-        <div class="app-info">
-          <h3>PicGo: AI Image Generator</h3>
-          <p>Create stunning images, videos, avatars, and logos in seconds with powerful AI.</p>
+      <div class="app-card reveal reveal-delay-3">
+        <div class="app-card-top">
+          <div class="app-icon-placeholder" style="background: linear-gradient(135deg,#1a2a3e,#1a5f8e);"><img src="https://play-lh.googleusercontent.com/q7Ilc15nb7uRUinyjUUZHHeQxQZRxMIgtN4T_pt7I0OuH1tA43BK-JudB9KK274TKjPe=w480-h960-rw" alt="RadioMe" style="width:100%;height:100%;border-radius:14px;object-fit:cover;"></div>
+          <div>
+            <div class="app-name">RadioMe: FM Radio</div>
+            <div class="app-cat">Entertainment · Music</div>
+          </div>
         </div>
-      </a>
+        <p class="app-desc">Stream AM/FM radio from thousands of stations worldwide. Clean interface, outstanding audio quality, and constantly updated station directories.</p>
+        <div class="app-footer">
+          <div class="app-rating"><span class="star">★</span> 4.2 <span style="color:var(--muted); font-weight:300; font-size:0.8rem;">/ 5</span></div>
+          <a href="https://play.google.com/store/apps/details?id=com.last.fm.live.radio.stations" target="_blank" class="app-link"><span class="app-tag">MEDIA</span> Download →</a>
+        </div>
+      </div>
+
+      <div class="app-card reveal reveal-delay-1">
+        <div class="app-card-top">
+          <div class="app-icon-placeholder" style="background: linear-gradient(135deg,#2e2e0f,#8e8e1a);"><img src="https://play-lh.googleusercontent.com/zKqxUmRoUBd0OUnu3IlANS7GU_BbX5J7Iz9yR9vMqGTXoAhzo5R1aowCMLCLg0jDQQ=w480-h960-rw" alt="AR Drawing" style="width:100%;height:100%;border-radius:14px;object-fit:cover;"></div>
+          <div>
+            <div class="app-name">AR Drawing: Sketch & Trace</div>
+            <div class="app-cat">Art & Design · AR</div>
+          </div>
+        </div>
+        <p class="app-desc">Draw like a professional artist using AR technology. Project any image onto paper to sketch characters, anime, and portraits with ease.</p>
+        <div class="app-footer">
+          <div class="app-rating"><span class="star">★</span> 3.8 <span style="color:var(--muted); font-weight:300; font-size:0.8rem;">/ 5</span></div>
+          <a href="https://play.google.com/store/apps/details?id=com.draw.sketch.ardrawing.paint.anime.ghibli.cartoon" target="_blank" class="app-link"><span class="app-tag">AR</span> Download →</a>
+        </div>
+      </div>
+
+      <div class="app-card reveal reveal-delay-2">
+        <div class="app-card-top">
+          <div class="app-icon-placeholder" style="background: linear-gradient(135deg,#2e1a1a,#8e3030);"><img src="https://play-lh.googleusercontent.com/gAcVjlvJzmuguum749pCMO3TZjPBq1vR7TwFLPi_2mfH01iC6FU6QfhYerowN23ZoQ=w480-h960-rw" alt="Music Downloader" style="width:100%;height:100%;border-radius:14px;object-fit:cover;"></div>
+          <div>
+            <div class="app-name">Music Downloader & MP3</div>
+            <div class="app-cat">Music · Entertainment</div>
+          </div>
+        </div>
+        <p class="app-desc">Download and listen to MP3s offline at high speed. Manage your personal music library with an advanced equalizer and a premium listening experience.</p>
+        <div class="app-footer">
+          <div class="app-rating"><span class="star">★</span> 4.1 <span style="color:var(--muted); font-weight:300; font-size:0.8rem;">/ 5</span></div>
+          <a href="https://play.google.com/store/apps/details?id=com.downloader.mp3.offline.player.free.music.song" target="_blank" class="app-link"><span class="app-tag">MUSIC</span> Download →</a>
+        </div>
+      </div>
+
+      <div class="app-card reveal reveal-delay-3">
+        <div class="app-card-top">
+          <div class="app-icon-placeholder" style="background: linear-gradient(135deg,#1a2e2e,#1a7e6e);"><img src="https://play-lh.googleusercontent.com/DpaTdEzF6Js67IajFAdeSmEjMU0mFwGBbgnolHOeQ2J6fxUYryGRRY36hwWPBKYneg=w480-h960-rw" alt="PicGo" style="width:100%;height:100%;border-radius:14px;object-fit:cover;"></div>
+          <div>
+            <div class="app-name">PicGo: AI Image & Video Maker</div>
+            <div class="app-cat">Creative · AI Generator</div>
+          </div>
+        </div>
+        <p class="app-desc">Create stunning AI-generated images and videos from text prompts. Apply artistic filters, generate unique visuals, and bring your creative ideas to life instantly.</p>
+        <div class="app-footer">
+          <div class="app-rating"><span class="star">★</span> 3.5 <span style="color:var(--muted); font-weight:300; font-size:0.8rem;">/ 5</span></div>
+          <a href="https://play.google.com/store/apps/details?id=com.aiart.aigenerator.aifilter.aieditor" target="_blank" class="app-link"><span class="app-tag">AI</span> Download →</a>
+        </div>
+      </div>
+
+      <div class="app-card reveal reveal-delay-3" style="border-style: dashed; opacity: 0.6; align-items: center; justify-content: center; text-align: center; min-height: 200px;">
+        <div style="font-size: 2rem; margin-bottom: 12px;">🚀</div>
+        <div style="font-family: 'Syne', sans-serif; font-weight: 700; margin-bottom: 8px;">Coming Soon</div>
+        <p style="color: var(--muted); font-size: 0.85rem;">New apps are currently in development</p>
+      </div>
 
     </div>
   </section>
 
+  <!-- ABOUT -->
   <section id="about">
-    <div class="container">
-      <h2>About Now Tech</h2>
-      <p>We are a passionate studio dedicated to mobile apps and cutting-edge AI. Every app is thoughtfully designed to solve real problems, delivering smooth experiences and real value to users around the world.</p>
-      <p>Over 10 high-quality apps with millions of downloads on Google Play.</p>
+    <div class="about-visual reveal">
+      <div class="about-ring"><div class="about-ring-dot"></div></div>
+      <div class="about-ring"><div class="about-ring-dot"></div></div>
+      <div class="about-ring"><div class="about-ring-dot"></div></div>
+      <div class="about-center">
+        <div class="about-logo-text">Now<span>Tech</span></div>
+        <div class="about-tagline">BUILD · INNOVATE · GROW</div>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="section-label">About Us</div>
+      <h2>A Pioneering<br/>Technology Studio</h2>
+      <p class="section-desc" style="margin-bottom: 24px;">Now Tech is a mobile application development studio specializing in artificial intelligence integration. We believe cutting-edge technology must be paired with an outstanding user experience.</p>
+      <p class="section-desc">With a talented team of engineers and designers, every product we create delivers real value — from education and creativity to everyday utilities.</p>
+      <div class="about-pills">
+        <div class="pill">AI & Machine Learning</div>
+        <div class="pill">Mobile Development</div>
+        <div class="pill">UX / UI Design</div>
+        <div class="pill">Computer Vision</div>
+        <div class="pill">NLP</div>
+        <div class="pill">Cross-platform</div>
+      </div>
     </div>
   </section>
 
-  <section id="contact" class="container">
-    <h2>Get in Touch</h2>
-    <p>Have an idea for collaboration, feedback, or want to build an app with Now Tech? Reach out today!</p>
-    <div class="contact-links">
-      <a href="mailto:support@nowtech.studio">📧 support@nowtech.studio</a>
-      <a href="https://play.google.com/store/apps/developer?id=Now+Tech" target="_blank">→ Google Play Developer Page</a>
+  <!-- VALUES -->
+  <section id="values">
+    <div class="reveal" style="text-align: center; max-width: 540px; margin: 0 auto 56px;">
+      <div class="section-label" style="justify-content: center;">Our Philosophy</div>
+      <h2>What Drives<br/>Everything We Build</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-icon" style="background: rgba(91,106,247,0.1);">⚡</div>
+        <div class="value-title">Speed & Performance</div>
+        <p class="value-desc">Every app is optimized to run smoothly, load instantly, and consume minimal resources across all devices and network conditions.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-icon" style="background: rgba(167,139,250,0.1);">🎯</div>
+        <div class="value-title">User-First Design</div>
+        <p class="value-desc">Users are at the center of every design decision. Intuitive interfaces that are minimal yet fully featured, and easy for anyone to use.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-3">
+        <div class="value-icon" style="background: rgba(56,226,195,0.1);">🤖</div>
+        <div class="value-title">AI-Powered Innovation</div>
+        <p class="value-desc">We integrate the most advanced AI technologies into every product, creating intelligent and personalized experiences that truly stand out.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-icon" style="background: rgba(251,191,36,0.1);">🌍</div>
+        <div class="value-title">Global Vision</div>
+        <p class="value-desc">Our products serve users around the world, designed to transcend all language and cultural barriers and reach every corner of the globe.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-icon" style="background: rgba(248,113,113,0.1);">🔒</div>
+        <div class="value-title">Security & Privacy</div>
+        <p class="value-desc">User data is fully protected. We build applications to the highest international security standards, so users can always trust our products.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-3">
+        <div class="value-icon" style="background: rgba(52,211,153,0.1);">📈</div>
+        <div class="value-title">Continuous Improvement</div>
+        <p class="value-desc">We listen to user feedback and constantly update and improve our products to meet the ever-growing expectations of our community.</p>
+      </div>
     </div>
   </section>
 
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="reveal">
+      <div class="section-label" style="justify-content: center;">Get In Touch</div>
+      <h2 style="text-align: center;">Let's Build<br/>Something Together</h2>
+    </div>
+    <div class="contact-box reveal reveal-delay-2">
+      <p>Have an idea for a mobile app? Want to collaborate or learn more about Now Tech? We're always open to new opportunities and partnerships.</p>
+      <a href="mailto:contact@nowtechai.com" class="contact-email">contact@nowtechai.com</a>
+      <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <a href="https://play.google.com/store/apps/developer?id=Now+Tech" target="_blank" class="btn-primary">View on Google Play ↗</a>
+        <a href="mailto:contact@nowtechai.com" class="btn-ghost">Send an Email</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    <div class="container">
-      <p>© 2026 Now Tech Studio. All rights reserved.<br>Powered by creativity & AI innovation.</p>
+    <div class="footer-logo">Now Tech</div>
+    <div style="color: var(--muted); font-size: 0.8rem;">© 2024 Now Tech Studio. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="https://play.google.com/store/apps/developer?id=Now+Tech" target="_blank">Google Play</a>
+      <a href="#apps">Products</a>
+      <a href="#contact">Contact</a>
     </div>
   </footer>
 
   <script>
-    window.addEventListener('scroll', () => {
-      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 100);
+    // Disable custom cursor on touch devices
+    const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+    if (!isTouchDevice) {
+      const cursor = document.getElementById('cursor');
+      const ring = document.getElementById('cursor-ring');
+      let mx = 0, my = 0;
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+        ring.style.transform = `translate(${mx - 18}px, ${my - 18}px)`;
+      });
+      document.querySelectorAll('a, button, .app-card, .value-card').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          ring.style.width = '56px'; ring.style.height = '56px';
+          ring.style.borderColor = 'rgba(91,106,247,0.7)';
+          ring.style.transform = `translate(${mx - 28}px, ${my - 28}px)`;
+        });
+        el.addEventListener('mouseleave', () => {
+          ring.style.width = '36px'; ring.style.height = '36px';
+          ring.style.borderColor = 'rgba(91,106,247,0.5)';
+        });
+      });
+    } else {
+      document.getElementById('cursor').style.display = 'none';
+      document.getElementById('cursor-ring').style.display = 'none';
+      document.body.style.cursor = 'auto';
+    }
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('mobileDrawer');
+    hamburger.addEventListener('click', () => {
+      const isOpen = drawer.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    drawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        drawer.classList.remove('open');
+        hamburger.classList.remove('open');
+        document.body.style.overflow = '';
+      });
     });
 
-    const cards = document.querySelectorAll('.app-card');
+    // Scroll reveal
     const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.15 });
-    cards.forEach(card => observer.observe(card));
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
