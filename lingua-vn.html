@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lingua AI — Kỷ Nguyên Mới Của Học Tiếng Anh</title>
+<link rel="icon" href="https://play-lh.googleusercontent.com/AX_zrObYTbb9UpR3hGJUva6t9vTrPJQzrpCFLOnLvKvs4B_uxAqTMcIrTAF9LfX-5scq=w240-h480" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -117,6 +118,7 @@
   .hero-ctas {
     display: flex; gap: 12px; margin-top: 2.2rem; flex-wrap: wrap;
     animation: slideUp 0.7s 0.3s ease both;
+    margin-bottom: 0;
   }
   .btn-green {
     display: inline-flex; align-items: center; gap: 8px;
@@ -135,9 +137,41 @@
     font-size: 0.95rem; font-weight: 600; text-decoration: none; cursor: pointer; transition: all 0.22s;
   }
   .btn-ghost:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-pale); }
+
+  /* Store badges */
+  .store-badges {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    margin-top: 1.4rem;
+    animation: slideUp 0.7s 0.38s ease both;
+  }
+  .store-badge {
+    display: inline-flex; align-items: center; gap: 11px;
+    padding: 11px 20px; border-radius: 14px;
+    background: #111814; border: 1.5px solid rgba(255,255,255,0.12);
+    text-decoration: none; transition: all 0.22s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    flex: 0 0 auto;
+  }
+  .store-badge:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.28); background: #1b2e1a; border-color: var(--green-mid); }
+  .store-badge svg { flex-shrink: 0; width: 22px; height: 22px; }
+  .store-badge-text { display: flex; flex-direction: column; line-height: 1.25; }
+  .store-badge-text .sub { font-size: 0.6rem; color: rgba(255,255,255,0.5); font-weight: 500; letter-spacing: 0.03em; text-transform: uppercase; }
+  .store-badge-text .main { font-size: 0.9rem; color: white; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; }
+  /* Light variant for dark backgrounds */
+  .store-badge.light { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+  .store-badge.light:hover { background: rgba(255,255,255,0.1); border-color: var(--green-mid); }
+  /* Mobile: stack store badges full width */
+  @media (max-width: 480px) {
+    .store-badges { flex-direction: column; gap: 10px; }
+    .store-badge { justify-content: center; width: 100%; max-width: 260px; }
+    .hero-ctas { flex-direction: column; }
+    .btn-green, .btn-ghost { text-align: center; justify-content: center; width: 100%; max-width: 260px; }
+  }
+
   .hero-trust {
-    display: flex; align-items: center; gap: 12px; margin-top: 2rem;
-    animation: slideUp 0.7s 0.4s ease both;
+    display: flex; align-items: center; gap: 12px; margin-top: 1.6rem;
+    animation: slideUp 0.7s 0.45s ease both;
+    flex-wrap: wrap;
   }
   .avatars { display: flex; }
   .av {
@@ -517,9 +551,14 @@
 
   /* RESPONSIVE */
   @media (max-width:960px) {
-    #hero { grid-template-columns:1fr; min-height:auto; }
+    #hero { grid-template-columns:1fr; min-height:auto; padding: 88px 5vw 50px; }
     .hero-right { display:none; }
+    #hero h1 { font-size: clamp(2.2rem, 8vw, 3.2rem); }
+    .store-badges { margin-top: 1.2rem; }
+    .store-badge { flex: 1 1 calc(50% - 6px); min-width: 150px; justify-content: center; }
     .feat-grid, .prob-grid { grid-template-columns:1fr 1fr; }
+    .store-badges { flex-wrap: wrap; }
+    .store-badge { flex: 1 1 calc(50% - 6px); justify-content: center; min-width: 160px; }
     .srs-grid, .convo-grid { grid-template-columns:1fr; }
     .res-row { grid-template-columns:1fr 1fr; }
     nav .nav-links { display:none; }
@@ -540,7 +579,7 @@
 <!-- NAV -->
 <nav id="navbar">
   <a class="nav-logo" href="#">
-    <div class="nav-logo-icon">🌿</div>
+    <img src="https://play-lh.googleusercontent.com/AX_zrObYTbb9UpR3hGJUva6t9vTrPJQzrpCFLOnLvKvs4B_uxAqTMcIrTAF9LfX-5scq=w240-h480" style="width:34px;height:34px;border-radius:10px;object-fit:cover;display:block;" alt="Lingua AI icon">
     LinguaAI
   </a>
   <ul class="nav-links">
@@ -561,6 +600,44 @@
     <div class="hero-ctas">
       <a href="#pricing" class="btn-green">🎯 Bắt đầu miễn phí</a>
       <a href="#features" class="btn-ghost">Xem tính năng →</a>
+    </div>
+    <div class="store-badges">
+      <a href="https://play.google.com/store/apps/details?id=com.learn.speak.language.english.aitutor.spainish.lingua" target="_blank" class="store-badge">
+        <svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.22 0.5C0.9 0.68 0.67 1.07 0.67 1.57V22.43C0.67 22.93 0.9 23.32 1.22 23.5L1.33 23.56L12.78 12.11V11.89L1.33 0.44L1.22 0.5Z" fill="url(#gp1)"/>
+  <path d="M16.67 16L12.78 12.11V11.89L16.67 8L16.8 8.07L21.44 10.72C22.74 11.46 22.74 12.54 21.44 13.28L16.8 15.93L16.67 16Z" fill="url(#gp2)"/>
+  <path d="M16.8 15.93L12.78 11.9L1.22 23.5C1.65 23.96 2.36 24.01 3.14 23.57L16.8 15.93Z" fill="url(#gp3)"/>
+  <path d="M16.8 8.07L3.14 0.43C2.36 -0.01 1.65 0.04 1.22 0.5L12.78 12.1L16.8 8.07Z" fill="url(#gp4)"/>
+  <defs>
+    <linearGradient id="gp1" x1="11.83" y1="1.6" x2="-4.55" y2="18.06" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00A0FF"/><stop offset="1" stop-color="#00BEFF"/>
+    </linearGradient>
+    <linearGradient id="gp2" x1="23.47" y1="12" x2="0.4" y2="12" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD800"/><stop offset="1" stop-color="#FF9500"/>
+    </linearGradient>
+    <linearGradient id="gp3" x1="14.29" y1="14.43" x2="-6.06" y2="35.08" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF3A44"/><stop offset="1" stop-color="#C31162"/>
+    </linearGradient>
+    <linearGradient id="gp4" x1="-1.8" y1="-7.53" x2="8.66" y2="3.01" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#32A071"/><stop offset="1" stop-color="#2DA771"/>
+    </linearGradient>
+  </defs>
+</svg>
+        <div class="store-badge-text">
+          <span class="sub">Get it on</span>
+          <span class="main">Google Play</span>
+        </div>
+      </a>
+      <a href="https://apps.apple.com/vn/app/lingua-speak-learn-english/id6747027880" target="_blank" class="store-badge">
+        <svg width="20" height="24" viewBox="0 0 20 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+  <path d="M16.24 12.76C16.21 9.98 18.5 8.64 18.6 8.58C17.3 6.67 15.27 6.42 14.55 6.4C12.82 6.22 11.14 7.44 10.26 7.44C9.36 7.44 8 6.42 6.54 6.45C4.66 6.48 2.9 7.58 1.93 9.29C-0.06 12.77 1.43 17.89 3.34 20.7C4.3 22.08 5.42 23.62 6.88 23.57C8.31 23.51 8.85 22.65 10.57 22.65C12.27 22.65 12.78 23.57 14.28 23.54C15.82 23.51 16.79 22.15 17.72 20.76C18.83 19.18 19.28 17.63 19.3 17.55C19.26 17.53 16.27 16.4 16.24 12.76Z"/>
+  <path d="M13.44 4.52C14.22 3.57 14.74 2.26 14.6 0.94C13.47 0.99 12.06 1.72 11.25 2.65C10.53 3.48 9.9 4.83 10.06 6.12C11.32 6.21 12.62 5.47 13.44 4.52Z"/>
+</svg>
+        <div class="store-badge-text">
+          <span class="sub">Download on the</span>
+          <span class="main">App Store</span>
+        </div>
+      </a>
     </div>
     <div class="hero-trust">
       <div class="avatars">
@@ -850,14 +927,92 @@
       <button class="p-btn out">Continue →</button>
     </div>
   </div>
-  <p class="p-note reveal">Privacy · Terms · Cancel anytime</p>
+  <div class="p-note reveal" style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <a href="https://play.google.com/store/apps/details?id=com.learn.speak.language.english.aitutor.spainish.lingua" target="_blank" class="store-badge" style="padding:10px 18px;">
+        <svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.22 0.5C0.9 0.68 0.67 1.07 0.67 1.57V22.43C0.67 22.93 0.9 23.32 1.22 23.5L1.33 23.56L12.78 12.11V11.89L1.33 0.44L1.22 0.5Z" fill="url(#gp1)"/>
+  <path d="M16.67 16L12.78 12.11V11.89L16.67 8L16.8 8.07L21.44 10.72C22.74 11.46 22.74 12.54 21.44 13.28L16.8 15.93L16.67 16Z" fill="url(#gp2)"/>
+  <path d="M16.8 15.93L12.78 11.9L1.22 23.5C1.65 23.96 2.36 24.01 3.14 23.57L16.8 15.93Z" fill="url(#gp3)"/>
+  <path d="M16.8 8.07L3.14 0.43C2.36 -0.01 1.65 0.04 1.22 0.5L12.78 12.1L16.8 8.07Z" fill="url(#gp4)"/>
+  <defs>
+    <linearGradient id="gp1" x1="11.83" y1="1.6" x2="-4.55" y2="18.06" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00A0FF"/><stop offset="1" stop-color="#00BEFF"/>
+    </linearGradient>
+    <linearGradient id="gp2" x1="23.47" y1="12" x2="0.4" y2="12" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD800"/><stop offset="1" stop-color="#FF9500"/>
+    </linearGradient>
+    <linearGradient id="gp3" x1="14.29" y1="14.43" x2="-6.06" y2="35.08" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF3A44"/><stop offset="1" stop-color="#C31162"/>
+    </linearGradient>
+    <linearGradient id="gp4" x1="-1.8" y1="-7.53" x2="8.66" y2="3.01" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#32A071"/><stop offset="1" stop-color="#2DA771"/>
+    </linearGradient>
+  </defs>
+</svg>
+        <div class="store-badge-text">
+          <span class="sub">Get it on</span>
+          <span class="main">Google Play</span>
+        </div>
+      </a>
+      <a href="https://apps.apple.com/vn/app/lingua-speak-learn-english/id6747027880" target="_blank" class="store-badge" style="padding:10px 18px;">
+        <svg width="20" height="24" viewBox="0 0 20 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+  <path d="M16.24 12.76C16.21 9.98 18.5 8.64 18.6 8.58C17.3 6.67 15.27 6.42 14.55 6.4C12.82 6.22 11.14 7.44 10.26 7.44C9.36 7.44 8 6.42 6.54 6.45C4.66 6.48 2.9 7.58 1.93 9.29C-0.06 12.77 1.43 17.89 3.34 20.7C4.3 22.08 5.42 23.62 6.88 23.57C8.31 23.51 8.85 22.65 10.57 22.65C12.27 22.65 12.78 23.57 14.28 23.54C15.82 23.51 16.79 22.15 17.72 20.76C18.83 19.18 19.28 17.63 19.3 17.55C19.26 17.53 16.27 16.4 16.24 12.76Z"/>
+  <path d="M13.44 4.52C14.22 3.57 14.74 2.26 14.6 0.94C13.47 0.99 12.06 1.72 11.25 2.65C10.53 3.48 9.9 4.83 10.06 6.12C11.32 6.21 12.62 5.47 13.44 4.52Z"/>
+</svg>
+        <div class="store-badge-text">
+          <span class="sub">Download on the</span>
+          <span class="main">App Store</span>
+        </div>
+      </a>
+    </div>
+    <p style="color:rgba(255,255,255,0.25);font-size:0.8rem">Privacy · Terms · Cancel anytime</p>
+  </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div>
-    <div class="f-logo">Lingua<span>AI</span></div>
+    <div class="f-logo" style="display:flex;align-items:center;gap:10px;"><img src="https://play-lh.googleusercontent.com/AX_zrObYTbb9UpR3hGJUva6t9vTrPJQzrpCFLOnLvKvs4B_uxAqTMcIrTAF9LfX-5scq=w240-h480" style="width:32px;height:32px;border-radius:9px;object-fit:cover;" alt="icon"> Lingua<span>AI</span></div>
     <p style="margin-top:4px">Kỷ Nguyên Mới Của Học Tiếng Anh</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
+      <a href="https://play.google.com/store/apps/details?id=com.learn.speak.language.english.aitutor.spainish.lingua" target="_blank" class="store-badge light" style="padding:8px 16px;">
+        <svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.22 0.5C0.9 0.68 0.67 1.07 0.67 1.57V22.43C0.67 22.93 0.9 23.32 1.22 23.5L1.33 23.56L12.78 12.11V11.89L1.33 0.44L1.22 0.5Z" fill="url(#gp1)"/>
+  <path d="M16.67 16L12.78 12.11V11.89L16.67 8L16.8 8.07L21.44 10.72C22.74 11.46 22.74 12.54 21.44 13.28L16.8 15.93L16.67 16Z" fill="url(#gp2)"/>
+  <path d="M16.8 15.93L12.78 11.9L1.22 23.5C1.65 23.96 2.36 24.01 3.14 23.57L16.8 15.93Z" fill="url(#gp3)"/>
+  <path d="M16.8 8.07L3.14 0.43C2.36 -0.01 1.65 0.04 1.22 0.5L12.78 12.1L16.8 8.07Z" fill="url(#gp4)"/>
+  <defs>
+    <linearGradient id="gp1" x1="11.83" y1="1.6" x2="-4.55" y2="18.06" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00A0FF"/><stop offset="1" stop-color="#00BEFF"/>
+    </linearGradient>
+    <linearGradient id="gp2" x1="23.47" y1="12" x2="0.4" y2="12" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD800"/><stop offset="1" stop-color="#FF9500"/>
+    </linearGradient>
+    <linearGradient id="gp3" x1="14.29" y1="14.43" x2="-6.06" y2="35.08" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF3A44"/><stop offset="1" stop-color="#C31162"/>
+    </linearGradient>
+    <linearGradient id="gp4" x1="-1.8" y1="-7.53" x2="8.66" y2="3.01" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#32A071"/><stop offset="1" stop-color="#2DA771"/>
+    </linearGradient>
+  </defs>
+</svg>
+        <div class="store-badge-text">
+          <span class="sub">Get it on</span>
+          <span class="main" style="font-size:0.82rem">Google Play</span>
+        </div>
+      </a>
+      <a href="https://apps.apple.com/vn/app/lingua-speak-learn-english/id6747027880" target="_blank" class="store-badge light" style="padding:8px 16px;">
+        <svg width="20" height="24" viewBox="0 0 20 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+  <path d="M16.24 12.76C16.21 9.98 18.5 8.64 18.6 8.58C17.3 6.67 15.27 6.42 14.55 6.4C12.82 6.22 11.14 7.44 10.26 7.44C9.36 7.44 8 6.42 6.54 6.45C4.66 6.48 2.9 7.58 1.93 9.29C-0.06 12.77 1.43 17.89 3.34 20.7C4.3 22.08 5.42 23.62 6.88 23.57C8.31 23.51 8.85 22.65 10.57 22.65C12.27 22.65 12.78 23.57 14.28 23.54C15.82 23.51 16.79 22.15 17.72 20.76C18.83 19.18 19.28 17.63 19.3 17.55C19.26 17.53 16.27 16.4 16.24 12.76Z"/>
+  <path d="M13.44 4.52C14.22 3.57 14.74 2.26 14.6 0.94C13.47 0.99 12.06 1.72 11.25 2.65C10.53 3.48 9.9 4.83 10.06 6.12C11.32 6.21 12.62 5.47 13.44 4.52Z"/>
+</svg>
+        <div class="store-badge-text">
+          <span class="sub">Download on the</span>
+          <span class="main" style="font-size:0.82rem">App Store</span>
+        </div>
+      </a>
+    </div>
   </div>
   <p>© 2026 LinguaAI. Bản quyền được bảo lưu.</p>
 </footer>
